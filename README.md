@@ -24,7 +24,7 @@ After setting up the Terraform environment, we can run the **`terraform apply`**
 
 ![terraform apply ](terraform-apply.png)
 ## configuration our vm with ansible 
-![Ansible Execution  ](Ansible Execution Screenshot)
+![Ansible Execution  ](Ansible-Execution-Screenshot)
 After preparing the infrastructure and configuring the server, and executing our frontend and backend pipeline located in Jenkins, we find## Deployed application is accessible via public IP address.
 ![Application deployed ](Application.png)
 
