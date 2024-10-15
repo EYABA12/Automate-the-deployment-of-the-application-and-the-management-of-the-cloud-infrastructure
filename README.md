@@ -26,17 +26,14 @@ Automatisation des déploiements pour une application appelée **Minitrello**, r
 
 ## Architecture du Projet
 ![Architecture du Projet](architecture.png) <!-- Remplacez par le lien de l'image de votre architecture -->
-## Architecture de l'Infrastructure Azure avec Terraform
-![Architecture de l'Infrastructure Azure](685beb32-543c-440f-ba1a-aa350bf67e3a.jpg) <!-- Remplacez par le lien de l'image de votre architecture -->
-
 ### Exécution de Terraform
 Après avoir configuré votre environnement Terraform et ajouté vos fichiers de configuration, exécutez la commande suivante :
 
 ```bash
 terraform apply
+## Architecture de l'Infrastructure Azure avec Terraform
+![Architecture de l'Infrastructure Azure](685beb32-543c-440f-ba1a-aa350bf67e3a.jpg) <!-- Remplacez par le lien de l'image de votre architecture -->
 
-## Instructions pour l'exécution
-1. **Cloner le dépôt :**
-   ```bash
-   git clone <URL_DU_DEPOT>
-   cd SECOPS_360
+
+
+
