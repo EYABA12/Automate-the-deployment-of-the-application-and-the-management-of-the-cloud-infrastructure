@@ -20,11 +20,9 @@ Our pipeline includes both a CI (Continuous Integration) part and a CD (Continuo
 ![CI/CD Pipeline](CICD-pipeline-frontendbackend.png)
 ## Preparation for the Adoption of Infrastructure as Code (IaC) with Terraform
 
-After setting up the Terraform environment, we can run the `terraform apply` command to deploy the infrastructure.
+After setting up the Terraform environment, we can run the **`terraform apply`** command to deploy the infrastructure. After executing this command, we find the following results:
 
-```bash
-terraform apply
-
+![CI/CD Pipeline](CICD-pipeline-frontendbackend.png)
 
 
 
