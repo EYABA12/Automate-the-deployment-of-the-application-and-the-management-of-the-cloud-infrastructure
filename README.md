@@ -25,7 +25,7 @@ Automatisation des déploiements pour une application appelée **Minitrello**, r
 - **Plateforme d'automatisation IT :** Ansible
 
 ## Architecture du Projet
-![Architecture du Projet](URL_DE_L_IMAGE) <!-- Remplacez par le lien de l'image de votre architecture -->
+![Architecture du Projet](architecture.png) <!-- Remplacez par le lien de l'image de votre architecture -->
 
 ## Instructions pour l'exécution
 1. **Cloner le dépôt :**
