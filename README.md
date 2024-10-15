@@ -30,5 +30,8 @@ Automation of deployments for an application called **Minitrello**, developed wi
 ### Running Terraform
 After configuring your Terraform environment and adding your configuration files, run the following command:
 
-```bash
 terraform apply
+
+## Project Architecture
+![Project Architecture](architecture.png) <!-- Replace with the link to your architecture image -->
+
