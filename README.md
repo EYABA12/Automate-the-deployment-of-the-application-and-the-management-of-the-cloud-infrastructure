@@ -22,7 +22,7 @@ Our pipeline includes both a CI (Continuous Integration) part and a CD (Continuo
 
 After setting up the Terraform environment, we can run the **`terraform apply`** command to deploy the infrastructure. After executing this command, we find the following results:
 
-![CI/CD Pipeline](CICD-pipeline-frontendbackend.png)
+![terraform apply ](685beb32-543c-440f-ba1a-aa350bf67e3a.jpg)
 
 
 
