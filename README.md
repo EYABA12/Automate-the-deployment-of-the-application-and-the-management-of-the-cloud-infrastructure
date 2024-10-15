@@ -31,10 +31,12 @@ After setting up the Terraform environment, we can run the **`terraform apply`**
 ![Ansible Execution  ](Ansible-Execution-Screenshot.png)
 
 After preparing the infrastructure and configuring the server, and executing our frontend and backend pipeline located in Jenkins, we find:
-#After pushing the images to Nexus, we find:
-![Nginx  ](Nginx.png)
+## Images in Nexus Registry
+
+![Nexus register  ](Nginx.png)
 
 ## Deployed application is accessible via public IP address.
+
 ![Application deployed ](Application.png)
 
 
