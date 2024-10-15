@@ -1,0 +1,57 @@
+# Début du playbook pour configurer les serveurs
+- name: Configurer les serveurs
+  hosts: all
+  become: yes  # Utiliser les privilèges root pour exécuter les tâches
+  gather_facts: yes  # Collecter les informations système sur les hôtes
+
+  tasks:
+    # Vérifier la connectivité réseau avec chaque hôte
+    - name: Ping les hôtes
+      ping:  # Utiliser le module ping d'Ansible pour tester la connexion aux hôtes
+    # Ajouter la clé GPG officielle pour Docker
+    - name: Ajouter la clé GPG officielle de Docker
+      become: yes  # Nécessite les privilèges root
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg  # URL de la clé GPG
+        state: present  # S'assurer que la clé est présente
+    # Configurer le dépôt Docker pour l'installation des paquets
+    - name: Configurer le dépôt Docker
+      become: yes  # Nécessite les privilèges root
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"  # Dépôt Docker pour Ubuntu
+        state: present  # S'assurer que le dépôt est ajouté
+    # Installer Docker, Docker CLI et Containerd
+    - name: Installer Docker
+      become: yes  # Nécessite les privilèges root
+      apt:
+        name:
+          - docker-ce  # Docker Community Edition
+          - docker-ce-cli  # CLI Docker
+          - containerd.io  # Containerd
+        state: present  # Installer les paquets s'ils ne sont pas déjà installés
+        update_cache: yes  # Mettre à jour le cache des paquets avant l'installation
+    # Obtenir le nom du système d'exploitation
+    - name: get name of OS
+      command: "uname -s"  # Exécuter la commande pour obtenir le nom du système d'exploitation
+      register: osname  # Enregistrer la sortie dans la variable osname
+      changed_when: False  # Ne pas marquer cette tâche comme ayant changé l'état du système
+      # Obtenir l'architecture du système
+    - name: get arch of OS
+      command: "uname -m"  # Exécuter la commande pour obtenir l'architecture du système
+      register: archname  # Enregistrer la sortie dans la variable archname
+      changed_when: False  # Ne pas marquer cette tâche comme ayant changé l'état du système
+
+    # Télécharger et installer Docker Compose CLI
+    - name: Download compose cli plugin
+      get_url:
+        url: https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-{{ osname.stdout }}-{{ archname.stdout }}  # URL de téléchargement de Docker Compose
+        dest: /usr/libexec/docker/cli-plugins/docker-compose  # Destination de l'installation
+        mode: 'a+rx,g-w,o-w'  # Définir les permissions du fichier
+
+    # Ajouter l'utilisateur actuel au groupe Docker
+    - name: Ajouter l'utilisateur au groupe Docker
+      become: yes  # Nécessite les privilèges root
+      user:
+        name: "{{ ansible_user }}"  # Nom de l'utilisateur à ajouter
+        groups: docker  # Groupe Docker
+        append: yes  # Ajouter l'utilisateur au groupe sans supprimer les groupes existants
