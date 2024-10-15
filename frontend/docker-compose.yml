@@ -1,0 +1,16 @@
+services:
+  fron-minitrello:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: front-miniTrello
+    ports:
+      - '3000:80'
+    env_file:
+      - .env
+    networks:
+      - miniTrello-networks
+
+networks:
+  miniTrello-networks:
+    external: true
