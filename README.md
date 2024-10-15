@@ -22,9 +22,10 @@ Our pipeline includes both a CI (Continuous Integration) part and a CD (Continuo
 
 After setting up the Terraform environment, we can run the **`terraform apply`** command to deploy the infrastructure. After executing this command, we find the following results:
 
-![terraform apply ](685beb32-543c-440f-ba1a-aa350bf67e3a.jpg)
-
-
-
+![terraform apply ](terraform-apply.png)
+## configuration our vm with ansible 
+![Ansible Execution  ](Ansible Execution Screenshot)
+After preparing the infrastructure and configuring the server, and executing our frontend and backend pipeline located in Jenkins, we find## Deployed application is accessible via public IP address.
+![Application deployed ](Application.png)
 
 
