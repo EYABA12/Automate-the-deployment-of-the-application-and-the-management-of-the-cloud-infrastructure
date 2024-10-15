@@ -17,7 +17,7 @@ Automation of deployments for an application called **Minitrello**, developed wi
 ![Project Architecture](architecture.png) <!-- Replace with the link to your architecture image -->
 ## CI/CD Pipeline
 Our pipeline includes both a CI (Continuous Integration) part and a CD (Continuous Deployment) part.
-![CI/CD Pipeline](CICD_pipeline-frontendbackend.png)
+![CI/CD Pipeline](CICD pipeline-frontendbackend.png)
 
 
 
