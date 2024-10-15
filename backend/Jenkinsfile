@@ -1,0 +1,153 @@
+pipeline {
+     agent any
+
+    environment {
+        NEXUS_REPO = '108.143.174.248:8082'
+        IMAGE_NAME = 'minitrello-frontend-front-minitrello'
+        AZURE_VM_IP = '108.143.174.248'
+        SSH_CREDENTIALS_ID = 'ssh_credentials_id'
+        AZURE_CLIENT_ID = credentials('AZURE_CLIENT_ID')
+        AZURE_CLIENT_SECRET = credentials('AZURE_CLIENT_SECRET')
+        AZURE_TENANT_ID = credentials('AZURE_TENANT_ID')
+        AZURE_SUBSCRIPTION_ID = credentials('AZURE_SUBSCRIPTION_ID')
+    }
+
+    stages {
+        //CI
+        stage('Checkout') {
+            steps {
+                // Récupérer le code depuis GitLab en utilisant les identifiants gitlab-credentials
+                git branch: 'Sprint1/EBA', url: 'https://gitlab.docker.piximind.com/piximind/devops24/secops36/minitrello-frontend.git', credentialsId: 'gitlab-credentials'
+            }
+        }
+          
+       stage('Login to Nexus') {
+            steps {
+                // Utilisation des credentials sécurisés pour Nexus
+                withCredentials([usernamePassword(credentialsId: 'nexus-credentials', usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASSWORD')]) {
+                    // Se connecter à Nexus
+                    sh "echo $NEXUS_PASSWORD | docker login -u $NEXUS_USERNAME --password-stdin $NEXUS_REPO"
+                }
+            }
+        }
+
+
+        stage('Build and Push Frontend Docker Image') {
+            steps {
+                script {
+                    def buildTag = "${env.BUILD_NUMBER}" // Utilisation du numéro de build comme tag
+                 // Stopper et supprimer le conteneur existant
+                            sh """
+                            docker stop front-miniTrello || true
+                            docker rm front-miniTrello || true
+                            """
+                 // Construire l'image et lancer le conteneur en utilisant Docker Compose
+                        sh """
+                        docker compose -f docker-compose.yml up --build -d
+                        """
+
+            
+// Taguer l'image avec 'latest'
+            sh """
+            docker tag frontend-fron-minitrello:latest ${NEXUS_REPO}/${IMAGE_NAME}:${buildTag}
+            docker tag frontend-fron-minitrello:latest ${NEXUS_REPO}/${IMAGE_NAME}:latest
+            """
+                
+                // Pousser l'image Docker vers Nexus avec les tags dynamiques
+                sh """
+                docker push ${NEXUS_REPO}/${IMAGE_NAME}:${buildTag}
+                docker push ${NEXUS_REPO}/${IMAGE_NAME}:latest
+                """
+
+                }
+            }
+        }
+//CD
+        stage('Install Azure CLI') {
+            steps {
+                script {
+                    def azureCliInstalled = sh(script: 'az --version', returnStatus: true)
+
+                    if (azureCliInstalled != 0) {
+                        echo "Azure CLI n'est pas installé. Installation en cours..."
+                            // Installer Azure CLI
+                            sh '''
+                            curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+                            '''
+                     } else {
+                        echo "Azure CLI est déjà installé."
+            }
+                }
+            }
+        }
+        
+
+
+   
+        stage('Authentifier avec Azure CLI') {
+            steps {
+                script {
+                    // Authentifier avec Azure CLI
+                    sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID'
+
+                }
+            }
+        }
+       
+
+     
+
+
+        
+        stage('Select Tag Image') {
+            steps {
+                script {
+                    // Déclarer customValue comme une variable globale
+                    env.CUSTOM_VALUE = input(
+                        message: 'Enter the image tag you want to pull',
+                        parameters: [
+                            string(
+                                defaultValue: 'latest',
+                                name: 'inputValue',
+                                description: 'Enter a custom tag value'
+                            )
+                        ]
+                    )
+
+                    echo "Custom value provided: ${env.CUSTOM_VALUE}"
+                }
+            }
+        }
+        
+        
+       
+
+
+      stage('Deploy Docker Image to VM') {
+    steps {
+        withCredentials([sshUserPrivateKey(credentialsId: 'ssh_credentials_id', keyFileVariable: 'SSH_KEY')]) {
+            withCredentials([usernamePassword(credentialsId: 'nexus-credentials', usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASSWORD')]) {
+                script {
+                    def azureVMIP = "${AZURE_VM_IP}"
+                    def azureVMUser = 'adminuser'
+
+                    // Déploiement sur la VM
+                    sh """
+                    ssh -o StrictHostKeyChecking=no -i ${SSH_KEY} ${azureVMUser}@${azureVMIP} <<EOF
+                    echo "SSH connection successful!"
+                    docker login -u ${NEXUS_USERNAME} -p ${NEXUS_PASSWORD} ${NEXUS_REPO}
+                    docker pull ${NEXUS_REPO}/${IMAGE_NAME}:${env.CUSTOM_VALUE}
+                    docker stop back-miniTrello || true
+                    docker rm back-miniTrello || true
+                        docker run -d --name back-miniTrello -p 4002:4002 ${NEXUS_REPO}/${IMAGE_NAME}:${env.CUSTOM_VALUE}
+
+
+                    """
+                }
+            }
+        }
+    }
+}
+
+}
+    }
