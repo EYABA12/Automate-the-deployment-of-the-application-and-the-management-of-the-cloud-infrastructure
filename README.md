@@ -4,11 +4,14 @@
 Automatisation des déploiements pour une application appelée **Minitrello**, réalisée avec **NodeJS**, **React** et **MongoDB**.
 
 ## Cadre du projet
-- **Optimisation des images Docker**
-- **Sauvegarde de l'image** dans le registre Nexus
-- **Intégration de l'Infrastructure as Code**
-- **Automatisation de la configuration des serveurs**
-- **Déploiement d'une application** sur un serveur dans Azure
+- **Dockerisation de l'application Minitrello**
+- **Automatisation du déploiement avec Jenkins**
+- **Intégration de tests dans la phase de CI**
+- **Gestion des requêtes et du trafic** avec Nginx Proxy Manager
+- **Adoption de l'Infrastructure as Code (IaC)**
+- **Mise en place d'une plateforme d'automatisation IT** avec Ansible
+- **Déploiement de l'application sur une machine virtuelle Azure**
+- **Utilisation de la méthodologie Agile Scrum** pour la gestion de projet
 
 ## Technologies utilisées
 - **Gestion de projet :** OpenProject, Agile Scrum
