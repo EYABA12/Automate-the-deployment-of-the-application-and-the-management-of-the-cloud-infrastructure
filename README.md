@@ -31,6 +31,10 @@ Après avoir configuré votre environnement Terraform et ajouté vos fichiers de
 
 ```bash
 terraform apply
+
+
+## Architecture de l'Infrastructure Azure avec Terraform
+![Architecture de l'Infrastructure Azure](URL_DE_L_IMAGE_ARCHITECTURE) <!-- Remplacez par le lien de l'image de votre architecture -->
 ## Architecture de l'Infrastructure Azure avec Terraform
 ![Architecture de l'Infrastructure Azure](685beb32-543c-440f-ba1a-aa350bf67e3a.jpg) <!-- Remplacez par le lien de l'image de votre architecture -->
 
