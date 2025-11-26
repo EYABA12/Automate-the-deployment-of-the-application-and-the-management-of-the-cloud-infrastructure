@@ -1,4 +1,4 @@
-# Summer Internship Project: SECOPS 360
+# Summer Internship Project:Automate the deployment of the application and the management of the cloud infrastructure
 
 ## About the Project
 Automation of deployments for an application called **Minitrello**, developed with **NodeJS**, **React**, and **MongoDB**.
