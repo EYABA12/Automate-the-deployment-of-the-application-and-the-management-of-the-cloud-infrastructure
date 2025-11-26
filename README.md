@@ -10,7 +10,7 @@ Automation of deployments for an application called **Minitrello**, developed wi
 - **Adoption of Infrastructure as Code (IaC) with **terrafrom**
 - **Establishment of an IT automation platform with **Ansible**
 - **Deployment of the application on **an Azure virtual machine**
-- Use of **Agile Scrum** methodology for project management
+- **Use of **Agile Scrum** methodology for project management
 
 ## Project Architecture
 
